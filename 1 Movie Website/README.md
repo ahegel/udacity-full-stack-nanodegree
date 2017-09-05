@@ -17,4 +17,4 @@ To see what the site will look like, download and open `movie_trailer_viewer.htm
 
 Here's a quick preview:
 
-![Preview of the movie website](/1 Movie Website/images/site.png)
+![Preview of the movie website](/1%20Movie%20Website/images/site.png)
