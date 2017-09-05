@@ -11,3 +11,10 @@ I created this site as part of the Udacity [Full Stack Web Developer Nanodegree]
 1. Download the files `create_website_content.py`, `media.py`, and `movie_trailer_viewer_py` and save them in the same directory.
 2. Edit the two variables at the beginning of `create_website_content.py` to your desired settings: the Wikipedia movie list you'd like to see (`MOVIE_LIST_URL`), and the number of movies from that list you'd like to include (`NUM_MOVIES`).
 3. Run `create_website_content.py`. The program will create two files: `movie_trailer_viewer.html` (the static site) and `trailer_urls.pkl` (a file that stores YouTube URLs so you don't have to keep accessing the site). You only need to re-run `create_website_content.py` when you want to change what the site displays using the variables at the beginning of the file.
+
+## Preview of the Site
+To see what the site will look like, download and open `movie_trailer_viewer.html`.
+
+Here's a quick preview:
+
+![Preview of the movie website](/images/site.png)
