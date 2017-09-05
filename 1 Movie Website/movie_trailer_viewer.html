@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Trailer Viewer</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+        .movie-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .movie-tile:nth-child(3n+1) {
+            clear:left;
+        }
+        .movie-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.movie-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Movie Trailer Viewer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="c7ynwAgQlDQ" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/e/e4/28_days_later.jpg/220px-28_days_later.jpg" width="220" height="342">
+      <h2>28 Days Later</h2>
+      <p><em>2002 British post-apocalyptic horror film</em></p>
+      <p><strong>Subject:</strong> epidemic</p>
+      <p><strong>Genres:</strong> horror, zombie, post-apocalyptic</p>
+      <p><strong>Duration:</strong> 113 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="vWQSMrtPiYs" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/b/b7/Twenty_eight_weeks_later.jpg/275px-Twenty_eight_weeks_later.jpg" width="220" height="342">
+      <h2>28 Weeks Later</h2>
+      <p><em>2007 British-Spanish post-apocalyptic science fiction horror film</em></p>
+      <p><strong>Subject:</strong> outbreak, epidemic</p>
+      <p><strong>Genres:</strong> horror, action, zombie, post-apocalyptic</p>
+      <p><strong>Duration:</strong> 99 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="jSsRkX71QBk" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/d/d1/Abraham_Lincoln_vs._Zombies_%28movie_poster%29.jpg" width="220" height="342">
+      <h2>Abraham Lincoln vs. Zombies</h2>
+      <p><em>2012 film by Richard Schenkman</em></p>
+      <p><strong>Genres:</strong> thriller, horror, action, mockbuster, zombie</p>
+      <p><strong>Duration:</strong> 92 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="p0CUsm5nXEo" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Aliendeaddvd.jpg/220px-Aliendeaddvd.jpg" width="220" height="342">
+      <h2>Alien Dead</h2>
+      <p><em>1980 film by Fred Olen Ray</em></p>
+      <p><strong>Genres:</strong> horror, science fiction, zombie</p>
+      <p><strong>Duration:</strong> 69 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="n1MKWKYnnAc" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/3/38/AllsoulsdayDVD.jpg/220px-AllsoulsdayDVD.jpg" width="220" height="342">
+      <h2>All Souls Day</h2>
+      <p><em>2005 zombie film</em></p>
+      <p><strong>Subject:</strong> supernatural</p>
+      <p><strong>Genres:</strong> horror, zombie</p>
+      <p><strong>Duration:</strong> 86 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="Rgez04II7FQ" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/4/41/The_Amazing_Adventures_of_the_Living_Corpse.jpg" width="220" height="342">
+      <h2>The Amazing Adventures of the Living Corpse</h2>
+      <p><em>2012 American animated 3D horror film</em></p>
+      <p><strong>Genres:</strong> horror, zombie</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="tdhXeqrjtmw" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/d/d0/American_Zombie.jpg" width="220" height="342">
+      <h2>American Zombie</h2>
+      <p><em>2007 film by Grace Lee</em></p>
+      <p><strong>Genres:</strong> horror, zombie</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="UHZQEtG8xYo" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/4/46/Army_of_Darkness_poster.jpg" width="220" height="342">
+      <h2>Army of Darkness</h2>
+      <p><em>1992 film by Sam Raimi</em></p>
+      <p><strong>Subject:</strong> time travel, demon</p>
+      <p><strong>Genres:</strong> fantasy, comedy horror, adventure, zombie, horror, comedy</p>
+      <p><strong>Duration:</strong> 81 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="rPxTR3y0nIc" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/2/23/Astrozombies.jpg/220px-Astrozombies.jpg" width="220" height="342">
+      <h2>The Astro-Zombies</h2>
+      <p><em>1968 film by Ted V. Mikels</em></p>
+      <p><strong>Genres:</strong> horror, science fiction, monster, zombie</p>
+      <p><strong>Duration:</strong> 90 minutes</p>
+    </div>
+
+    <div class="col-md-6 col-lg-4 movie-tile text-left" data-trailer-youtube-id="AuUfo7G-lOE" data-toggle="modal" data-target="#trailer">
+      <img src="http://upload.wikimedia.org/wikipedia/en/thumb/1/10/Automaton_Transfusion_VideoCover.png/220px-Automaton_Transfusion_VideoCover.png" width="220" height="342">
+      <h2>Automaton Transfusion</h2>
+      <p><em>2006 film by Steven C. Miller</em></p>
+      <p><strong>Genres:</strong> horror, teen, zombie</p>
+      <p><strong>Duration:</strong> 72 minutes</p>
+    </div>
+
+    </div>
+  </body>
+</html>
