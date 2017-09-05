@@ -1,5 +1,5 @@
 # Movie Website
-This site grabs movies from any Wikipedia list (for example, [zombie films](https://en.wikipedia.org/wiki/List_of_zombie_films)) and displays them on a static webpage, where you can see its subject, genre, and duration, and click to view its trailer.
+This site grabs movies from any Wikipedia list (for example, [zombie films](https://en.wikipedia.org/wiki/List_of_zombie_films)) and displays them on a static webpage, automatically supplying data including the movie's subject, genre, and duration, and allowing you to click on the movie's poster to view its trailer. The site uses Python to collect data about each movie from [Wikidata](https://www.wikidata.org/), and then presents the data as a webpage using HTML and CSS.
 
 I created this site as part of the Udacity [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
@@ -18,3 +18,5 @@ To see what the site will look like, download and open `movie_trailer_viewer.htm
 Here's a quick preview:
 
 ![Preview of the movie website](/1%20Movie%20Website/images/site.png)
+
+![Preview of the movie website with trailer playing](/1%20Movie%20Website/images/site_trailer.png)
