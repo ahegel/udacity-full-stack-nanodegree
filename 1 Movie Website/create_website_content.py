@@ -192,5 +192,5 @@ def create_movie_objects():
 
 movies = create_movie_objects()
 
-# Create Movie Trailer Viewer HTML page showing the movies
+# Create Movie Trailer Viewer HTML page to show the movies.
 movie_trailer_viewer.open_movies_page(movies)
