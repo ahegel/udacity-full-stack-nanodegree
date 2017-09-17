@@ -12,7 +12,7 @@
 
 #main-image {
     display: block;
-    margin: 0px auto;
+    margin: 0 auto;
     max-width: 100%;
 }
 
@@ -57,7 +57,7 @@
 
 .project-image {
     display: block;
-    margin: 0px auto;
+    margin: 0 auto;
     max-width: 100%;
     box-shadow: 1px 1px 5px 1px #ddd;
 }
