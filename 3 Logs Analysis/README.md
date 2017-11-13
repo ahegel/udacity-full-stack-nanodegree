@@ -1,6 +1,6 @@
 # Logs Analysis with SQL
 
-This project builds an internal reporting tool for a newspaper website that determines what kinds of articles the site's readers like. I use SQL to analyze a database with over a million rows and answer queries with the data.
+In this project, I build an internal reporting tool for a newspaper website that determines what kinds of articles the site's readers like. I use SQL to analyze a database with over a million rows and answer queries with the data.
 
 This project is part of the Udacity [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
@@ -22,15 +22,15 @@ This project is part of the Udacity [Full Stack Web Developer Nanodegree](https:
 
 ## Database
 
-The database contains three tables:
+The database (downloadable [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)) contains three tables:
 
 * The `articles` table includes information about news articles and their contents.
 * The `authors` table includes information about the authors of articles.
 * The `log` table includes one entry for each time a user has accessed the news site.
 
-## Results
+## SQL Queries
 
-You can also view the output of the SQL commands in the `output.txt` file in this repo.
+You can view the output of the SQL commands below in the [output.txt](https://github.com/ahegel/udacity-full-stack-nanodegree/blob/master/3%20Logs%20Analysis/output.txt) file in this repo.
 
 1. What are the most popular three articles of all time?
 
