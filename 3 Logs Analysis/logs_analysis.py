@@ -2,35 +2,44 @@
 
 import psycopg2
 from datetime import datetime
+import sys
 
 DBNAME = 'news'
 
 
-def executeQuery(query):
+def executeQuery(query, param=None):
     '''
     Take a string query and execute the query.
     Return a list of tuples.
     '''
-    db = psycopg2.connect(database=DBNAME)
+    try:
+        db = psycopg2.connect(database=DBNAME)
+    except psycopg2.OperationalError as e:
+        print 'Unable to connect to database.'
+        print e
+        sys.exit(1)
     c = db.cursor()
-    c.execute(query)
+    if param:
+        c.execute(query, (param,))
+    else:
+        c.execute(query)
     rows = c.fetchall()
     db.close()
     return rows
 
 
-def top_n_articles(n):
+def top_n_articles(n=3):
     '''
     Return the top n articles by number of views.
     '''
     query = """SELECT articles.title, COUNT(*) as views
                FROM articles INNER JOIN log
-               ON log.path LIKE CONCAT('%', articles.slug, '%')
+               ON log.path = '/article/' || articles.slug
                WHERE log.status like '200%'
                GROUP BY articles.title
                ORDER BY views DESC
-               LIMIT {}""".format(int(n))
-    top_n_articles = executeQuery(query)
+               LIMIT (%s)"""
+    top_n_articles = executeQuery(query, int(n))
     return top_n_articles
 
 
@@ -41,7 +50,7 @@ def popular_authors():
     query = """SELECT authors.name, COUNT(*) as views
                FROM articles
                INNER JOIN authors ON articles.author = authors.id
-               INNER JOIN log ON log.path LIKE CONCAT('%', articles.slug, '%')
+               INNER JOIN log ON log.path = '/article/' || articles.slug
                WHERE log.status like '200%'
                GROUP BY authors.name
                ORDER BY views DESC"""
@@ -49,16 +58,16 @@ def popular_authors():
     return popular_authors
 
 
-def days_with_error(n):
+def days_with_error(n=1):
     '''
     Return days when more than n% of requests were errors.
     '''
     query = """SELECT day, perc FROM (
                  SELECT day, ROUND(
                    (SUM(requests)/(SELECT COUNT(*) FROM log
-               WHERE SUBSTRING(CAST(log.time AS text), 0, 11) = day) * 100), 2)
+               WHERE time::date = day) * 100), 2)
                  AS perc FROM (
-                   SELECT SUBSTRING(CAST(log.time AS text), 0, 11) AS day,
+                   SELECT time::date AS day,
                      COUNT(*) AS requests
                    FROM log
                    WHERE status LIKE '%404%'
@@ -67,8 +76,8 @@ def days_with_error(n):
                  GROUP BY day
                  ORDER BY perc DESC)
                AS result
-               WHERE perc >= {}""".format(int(n))
-    errors = executeQuery(query)
+               WHERE perc >= (%s)"""
+    errors = executeQuery(query, int(n))
     return errors
 
 if __name__ == '__main__':
