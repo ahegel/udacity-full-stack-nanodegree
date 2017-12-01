@@ -1,6 +1,10 @@
 # Logs Analysis with SQL
 
-In this project, I build an internal reporting tool for a newspaper website that determines what kinds of articles the site's readers like. I use SQL to analyze a database with over a million rows and answer queries with the data.
+In this project, I build an internal reporting tool for a newspaper website that determines what kinds of articles the site's readers like. I use SQL to analyze a database with over a million rows and answer three queries with the data:
+
+1. What are the most popular three articles?
+2. Who are the most popular article authors?
+3. On which days did more than 1% of requests lead to errors?
 
 This project is part of the Udacity [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
@@ -13,7 +17,7 @@ This project is part of the Udacity [Full Stack Web Developer Nanodegree](https:
 
 ## Setup
 
-1. Ensure that Python, the python package [psycopg2](https://pypi.python.org/pypi/psycopg2), [Vagrant](https://www.vagrantup.com/), and [VirtualBox](https://www.virtualbox.org/) are installed.
+1. Ensure that Python, the python package [psycopg2](https://pypi.python.org/pypi/psycopg2), [Vagrant](https://www.vagrantup.com/), and [VirtualBox](https://www.virtualbox.org/) are installed. (The vagrantfile I used is [here](https://github.com/udacity/fullstack-nanodegree-vm/blob/master/vagrant/Vagrantfile).)
 2. Download or clone the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm) repository.
 3. Download the [SQL database](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip), unzip, and save `newsdata.sql` in the vagrant directory.
 4. Navigate to the vagrant folder in the terminal and enter `vagrant up` to bring the server online, followed by `vagrant ssh` to log in.
@@ -22,7 +26,7 @@ This project is part of the Udacity [Full Stack Web Developer Nanodegree](https:
 
 ## Database
 
-The database (downloadable [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)) contains three tables:
+The SQL script to create the data (downloadable [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)) results in a database called 'news' with three tables:
 
 * The `articles` table includes information about news articles and their contents.
 * The `authors` table includes information about the authors of articles.
@@ -37,7 +41,7 @@ You can view the output of the SQL commands below in the [output.txt](https://gi
     ```sql
     SELECT articles.title, COUNT(*) as views
     FROM articles INNER JOIN log
-    ON log.path LIKE CONCAT('%', articles.slug, '%')
+    ON log.path = '/article/' || articles.slug
     WHERE log.status like '200%'
     GROUP BY articles.title
     ORDER BY views DESC
@@ -50,7 +54,7 @@ You can view the output of the SQL commands below in the [output.txt](https://gi
     SELECT authors.name, COUNT(*) as views
     FROM articles
     INNER JOIN authors ON articles.author = authors.id
-    INNER JOIN log ON log.path LIKE CONCAT('%', articles.slug, '%')
+    INNER JOIN log ON log.path = '/article/' || articles.slug
     WHERE log.status like '200%'
     GROUP BY authors.name
     ORDER BY views DESC
@@ -62,9 +66,9 @@ You can view the output of the SQL commands below in the [output.txt](https://gi
     SELECT day, perc FROM (
         SELECT day, ROUND(
             (SUM(requests)/(SELECT COUNT(*) FROM log
-                            WHERE SUBSTRING(CAST(log.time AS text), 0, 11) = day) * 100), 2)
+                            WHERE time::date = day) * 100), 2)
         AS perc FROM (
-            SELECT SUBSTRING(CAST(log.time AS text), 0, 11) AS day,
+            SELECT time::date AS day,
                 COUNT(*) AS requests
             FROM log
             WHERE status LIKE '%404%'
